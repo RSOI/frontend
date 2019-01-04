@@ -1,13 +1,20 @@
 <template>
-  <div>Vue APP</div>
+  <router-view></router-view>
 </template>
 
 <script>
 export default {
-
 }
 </script>
 
-<style>
+<style module lang="scss">
+* {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
 
+html, body {
+  height: 100%;
+}
 </style>
