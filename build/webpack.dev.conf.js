@@ -23,7 +23,7 @@ const devWebpackConfig = merge(baseWebpackConfig, {
   devServer: {
     // contentBase: path.join(__dirname, '../dist'),
     // clientLogLevel: 'warning',
-    // historyApiFallback: true,
+    historyApiFallback: true,
     hot: true,
     // contentBase: false, // since we use CopyWebpackPlugin.
     // compress: true,
