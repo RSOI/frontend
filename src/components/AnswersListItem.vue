@@ -5,6 +5,14 @@
     <div :class="[$style.table]">
       <div :class="[$style.table__row]">
         <div :class="[$style.table__cell, $style.content]">
+          <router-link
+            v-if="showQuestionLink"
+            tag="a"
+            :to="`/question/id${meta.question_id}`"
+            :class="[$style.question__link]"
+          >
+            перейти к вопросу, чтобы узнать тему обсуждения
+          </router-link>
           {{ meta.content }}
         </div>
         <div :class="[$style.table__cell, $style.table__cell_right]">
@@ -12,14 +20,16 @@
             неплохой ответ <star width="20" height="20" />
           </div>
           <div :class="[$style.author]">
-            от пользователя
-            <router-link
-              tag="a"
-              :to="`/user/id${meta.author_id}`"
-              :class="[$style.author]"
-            >
-              {{ meta.author_nickname }}
-            </router-link>
+            <template  v-if="showAuthor">
+              от пользователя
+              <router-link
+                tag="a"
+                :to="`/user/id${meta.author_id}`"
+                :class="[$style.author]"
+              >
+                {{ meta.author_nickname }}
+              </router-link>
+            </template>
             <div :class="[$style.time]">
               {{ meta.created | time }}
             </div>
@@ -40,7 +50,9 @@ export default {
   props: {
     meta: Object,
     odd: Boolean,
-    index: Number
+    index: Number,
+    showAuthor: Boolean,
+    showQuestionLink: Boolean
   }
 }
 </script>
@@ -51,7 +63,6 @@ export default {
 .wrapper {
   padding: $padding-base;
 }
-
 
 .contrast {
   background: $color-bg-light-more;
@@ -105,5 +116,14 @@ export default {
   }
 }
 
+.question__link {
+  display: block;
+  color: $color-link;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
 
 </style>

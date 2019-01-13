@@ -16,5 +16,6 @@ export default {
 
 html, body {
   height: 100%;
+  min-width: 980px;
 }
 </style>

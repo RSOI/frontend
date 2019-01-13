@@ -10,7 +10,7 @@ const getters = {
 
 const actions = {
   request ({ state, commit }, data) {
-    if (!state[data.id]) {
+    if (!state.question[data.id]) {
       commit('addQuestion', data.id)
     }
 
@@ -18,16 +18,16 @@ const actions = {
       .then(response => {
         commit('store', { id: data.id, response })
       })
-  },
-  flush ({ state, commit }) {
-    commit('store', false, [])
   }
 }
 
 const mutations = {
   addQuestion (state, id) {
     state.question[id] = {
-      data: {},
+      data: {
+        questions: [],
+        counter: 0
+      },
       status: false,
       error: false
     }

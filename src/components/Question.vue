@@ -21,7 +21,7 @@
                     <div :class="[$style.question__meta_author]">
                       <router-link
                         tag="a"
-                        :to="`/user/id${meta.author_id}`"
+                        :to="`/user/id${meta.author.id}`"
                         :class="[$style.question__meta_nickname]"
                       >
                         {{ meta.author.nickname }}
@@ -113,7 +113,7 @@ export default {
 .question {
   border-bottom: 1px solid $color-border;
   padding: $padding-base 0;
-  
+
   &__title {
     @include fontSize5();
     padding-bottom: $padding-base / 2;

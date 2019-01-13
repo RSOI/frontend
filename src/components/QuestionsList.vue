@@ -11,9 +11,14 @@
       <template v-else-if="listError">
         Something went wrong
       </template>
-      <template v-else-if="!list.length">
+      <template v-else-if="!list || !list.length">
         <div :class="[$style.nodata]">
-          Кажется, больше вопросов нет...
+          <template v-if="page > 1">
+            Кажется, больше вопросов нет...
+          </template>
+          <template v-else-if="userid">
+            Кажется, этот пользователь слишком умный, чтобы задавать вопросы
+          </template>
           <NoData />
         </div>
       </template>
@@ -21,9 +26,11 @@
         preloader
       </template>
       <Pagination
-        :page="page + 1"
-        :content="list.length"
-        link="/questions"
+        v-if="list || page > 1"
+        :page="page"
+        :amount="questions.data.counter"
+        :content="list ? list.length : 0"
+        :link="link"
       />
     </div>
   </div>
@@ -43,19 +50,33 @@ export default {
     Pagination
   },
   props: {
-    page: Number
+    page: Number,
+    userid: Number,
+    link: String
   },
   computed: {
     ...mapGetters('QuestionsAll', {
       questions: 'get'
     }),
+    ...mapGetters('User', {
+      user: 'get'
+    }),
     list () {
-      return this.questions.data
+      if (this.userid) {
+        return this.user[this.userid].questions.data.questions
+      }
+      return this.questions.data.questions
     },
     isListReady () {
-      return this.questions.status && !this.questions.error && this.questions.data.length
+      if (this.userid) {
+        return this.user[this.userid].questions.status && !this.user[this.userid].questions.error && this.user[this.userid].questions.data.questions
+      }
+      return this.questions.status && !this.questions.error && this.questions.data.questions.length
     },
     listError () {
+      if (this.userid) {
+        return this.user[this.userid].questions.error
+      }
       return this.questions.error
     }
   }

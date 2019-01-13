@@ -8,7 +8,10 @@
     ]">
       Назад
     </router-link>
-    <div :class="[$style.page]">{{ page }}</div>
+    <div :class="[$style.page]">
+      {{ page }}
+      <template v-if="maxPage">/ {{ maxPage }}</template>
+    </div>
     <router-link tag="a" :to="nextRoute" :class="[
       $style.btn,
       {
@@ -28,13 +31,17 @@ export default {
   props: {
     page: Number,
     content: Number,
-    link: String
+    link: String,
+    amount: Number
   },
   computed: {
     prev () {
       return this.page > 1
     },
     next () {
+      if (this.maxPage) {
+        return this.page < this.maxPage || this.page < 1
+      }
       return this.content >= 10 || this.page < 1
     },
     nextRoute () {
@@ -42,6 +49,12 @@ export default {
     },
     prevRoute () {
       return this.updateRoute(`page=${this.page - 1}`)
+    },
+    maxPage () {
+      if (this.amount) {
+        return Math.floor(this.amount / 10) + 1
+      }
+      return false
     }
   },
   methods: {

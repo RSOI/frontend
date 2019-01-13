@@ -21,11 +21,13 @@
             :class="[$style.input]"
             placeholder="Логин"
             type="text"
+            name="login"
           />
           <InputText
             :class="[$style.input]"
             placeholder="Пароль"
             type="password"
+            name="password"
           />
           <div :class="[$style.table]">
             <div :class="[$style.table__row]">

@@ -2,7 +2,7 @@
   <div :class="[$style.wrapper]">
     <Header />
     <SigninForm v-if="!loggedin" />
-    <QuestionsList :page="page" />
+    <QuestionsList :page="page" link="/questions" />
   </div>
 </template>
 
